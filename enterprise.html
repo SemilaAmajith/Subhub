@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SubHub - Enterprise Solutions</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Space+Grotesk:wght@500;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+
+<body class="dark-theme">
+    <!-- Animated Background Elements -->
+    <div class="blob blob-1"></div>
+    <div class="blob blob-2" style="top: 20%; right: -100px;"></div>
+
+    <!-- Sidebar / Drawer Menu -->
+    <div class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <h2>Sub<span class="highlight">Hub</span></h2>
+            <button id="closeSidebar" class="icon-btn"><i class="fas fa-times"></i></button>
+        </div>
+        <ul class="sidebar-nav">
+            <li><a href="index.html"><i class="fas fa-home"></i> Home</a></li>
+            <li><a href="store.html"><i class="fas fa-store"></i> Store</a></li>
+            <li><a href="login.html"><i class="fas fa-user-circle"></i> Login / Register</a></li>
+            <li><a href="admin.html"><i class="fas fa-shield-alt"></i> Admin Dashboard</a></li>
+        </ul>
+        <div class="sidebar-footer">
+            <p>&copy; 2026 SubHub Ecosystem</p>
+        </div>
+    </div>
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+    <!-- Top Navigation -->
+    <nav class="navbar">
+        <div class="navbar-left">
+            <button id="openSidebar" class="icon-btn"><i class="fas fa-bars"></i></button>
+            <a href="index.html" class="logo">Sub<span class="highlight">Hub</span></a>
+        </div>
+        <div class="navbar-center"
+            style="display: flex; gap: 20px; align-items: center; margin: 0 auto; display: none;">
+            <a href="index.html" style="color: var(--text-main); font-weight: 500;"><i class="fas fa-home"></i> Home</a>
+            <a href="store.html" style="color: var(--text-main); font-weight: 500;"><i class="fas fa-store"></i>
+                Store</a>
+        </div>
+        <div class="navbar-right" style="display: flex; align-items: center; gap: 20px;">
+            <div style="display: flex; gap: 20px; align-items: center;" class="desktop-nav-links">
+                <a href="index.html" class="nav-link"><i class="fas fa-home"></i> Home</a>
+                <a href="store.html" class="nav-link"><i class="fas fa-store"></i> Store</a>
+            </div>
+            <a href="login.html" class="login-btn"><i class="fas fa-user-circle"></i> Login</a>
+        </div>
+    </nav>
+
+    <!-- Page Content -->
+    <main class="container" style="padding-top: 120px; padding-bottom: 80px; min-height: 80vh;">
+        <div class="section-header">
+            <h1 class="section-title"><span class="highlight">Enterprise Solutions</span></h1>
+        </div>
+        <div
+            style="background: rgba(30, 41, 59, 0.4); border: 1px solid rgba(255, 255, 255, 0.05); padding: 40px; border-radius: 20px; color: #cbd5e1; font-size: 1.1rem; line-height: 1.8; max-width: 800px; margin: 0 auto; box-shadow: 0 10px 30px rgba(0,0,0,0.2);">
+            <p style="margin-bottom: 20px;">We also provide bulk and customized solutions for businesses and resellers.
+            </p>
+            <p style="margin-bottom: 10px; font-weight: 600; color: #fff;">Our enterprise services include:</p>
+            <ul style="margin-bottom: 20px; padding-left: 20px; list-style: none;">
+                <li style="margin-bottom: 10px;"><i class="fas fa-briefcase"
+                        style="color: var(--primary-color); margin-right: 10px;"></i> Bulk premium account supply</li>
+                <li style="margin-bottom: 10px;"><i class="fas fa-tags"
+                        style="color: var(--primary-color); margin-right: 10px;"></i> Custom pricing for large orders
+                </li>
+                <li style="margin-bottom: 10px;"><i class="fas fa-headset"
+                        style="color: var(--primary-color); margin-right: 10px;"></i> Dedicated support for partners
+                </li>
+                <li style="margin-bottom: 10px;"><i class="fas fa-truck-fast"
+                        style="color: var(--primary-color); margin-right: 10px;"></i> Fast and reliable delivery system
+                </li>
+            </ul>
+            <p>If you are looking to grow your business with premium digital services, feel free to contact us for
+                tailored solutions.</p>
+
+            <div style="margin-top: 30px; text-align: center;">
+                <a href="contact.html" class="cta-btn primary-cta">Contact Sales</a>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer style="margin-top: 40px;">
+        <div class="footer-container">
+            <div class="footer-col brand-col">
+                <h3>Sub<span class="highlight">Hub</span></h3>
+                <p>Next-generation digital access. Get what you need, instantly.</p>
+            </div>
+            <div class="footer-col">
+                <h4>Ecosystem</h4>
+                <ul>
+                    <li><a href="about.html">About Us</a></li>
+                    <li><a href="help.html">Help Center</a></li>
+                    <li><a href="enterprise.html">Enterprise Solutions</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>Legal</h4>
+                <ul>
+                    <li><a href="privacy.html">Privacy Policy</a></li>
+                    <li><a href="terms.html">Terms of Service</a></li>
+                    <li><a href="refund.html">Refund Policy</a></li>
+                </ul>
+            </div>
+            <div class="footer-col payment-col">
+                <h4>Accepted Here</h4>
+                <div class="payment-icons">
+                    <i class="fab fa-cc-visa" title="Visa"></i>
+                    <i class="fab fa-cc-mastercard" title="Mastercard"></i>
+                    <i class="fab fa-cc-paypal" title="PayPal"></i>
+                    <i class="fab fa-cc-amex" title="Amex"></i>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 SubHub Inc. Built for excellence.</p>
+        </div>
+    </footer>
+
+    <script src="js/script.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SubHub - Next-Gen Premium Subscriptions & Services</title>
+    <meta name="description"
+        content="Buy premium subscriptions for Netflix, Prime Video, HBO, Capcut Pro, and Web Development services.">
+    <link rel="stylesheet" href="css/style.css">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Space+Grotesk:wght@500;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.8.0/vanilla-tilt.min.js"></script>
+</head>
+
+<body class="dark-theme">
+    <!-- Animated Background Elements -->
+    <div class="blob blob-1"></div>
+    <div class="blob blob-2"></div>
+
+    <!-- Sidebar / Drawer Menu -->
+    <div class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <h2>Sub<span class="highlight">Hub</span></h2>
+            <button id="closeSidebar" class="icon-btn"><i class="fas fa-times"></i></button>
+        </div>
+        <ul class="sidebar-nav">
+            <li><a href="index.html" class="active"><i class="fas fa-home"></i> Home</a></li>
+            <li><a href="index.html#products"><i class="fas fa-store"></i> Store</a></li>
+            <li><a href="login.html"><i class="fas fa-user-circle"></i> Login / Register</a></li>
+            <li><a href="admin.html"><i class="fas fa-shield-alt"></i> Admin Dashboard</a></li>
+        </ul>
+        <div class="sidebar-footer">
+            <p>&copy; 2026 SubHub Ecosystem</p>
+        </div>
+    </div>
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+    <!-- Top Navigation -->
+    <nav class="navbar">
+        <div class="navbar-left">
+            <button id="openSidebar" class="icon-btn"><i class="fas fa-bars"></i></button>
+            <a href="index.html" class="logo">Sub<span class="highlight">Hub</span></a>
+        </div>
+        <div class="navbar-center"
+            style="display: flex; gap: 20px; align-items: center; margin: 0 auto; display: none; /* Mobile hidden, show on desktop via media query if needed or just show */">
+            <a href="index.html" style="color: var(--text-main); font-weight: 500;"><i class="fas fa-home"></i> Home</a>
+            <a href="store.html" style="color: var(--text-main); font-weight: 500;"><i class="fas fa-store"></i>
+                Store</a>
+        </div>
+        <div class="navbar-right" style="display: flex; align-items: center; gap: 20px;">
+            <div style="display: flex; gap: 20px; align-items: center;" class="desktop-nav-links">
+                <a href="index.html" class="nav-link"><i class="fas fa-home"></i> Home</a>
+                <a href="store.html" class="nav-link"><i class="fas fa-store"></i> Store</a>
+            </div>
+            <div class="search-bar">
+                <i class="fas fa-search"></i>
+                <input type="text" id="searchInput" placeholder="Search Netflix, HBO...">
+            </div>
+            <a href="login.html" class="login-btn"><i class="fas fa-user-circle"></i> Login</a>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <header class="hero">
+        <video class="hero-video" autoplay loop muted playsinline>
+            <source src="assets/Vedios/प्रीमियम_अकाउंट_के_लिए_वीडियो.mp4" type="video/mp4">
+        </video>
+        <div class="hero-glow"></div>
+        <div class="hero-content">
+            <div class="badge glow-badge"><i class="fas fa-bolt"></i> Instant Account Delivery</div>
+            <h1 class="hero-title">Elevate Your Digital <br><span class="highlight gradient-text">Experience</span></h1>
+            <p class="hero-subtitle">Premium access to Netflix, Prime Video, HBO Max, CapCut Pro, and exclusive Web
+                Development ecosystems.</p>
+            <div class="hero-buttons">
+                <a href="store.html" class="cta-btn primary-cta">Explore Services <i class="fas fa-arrow-right"></i></a>
+                <a href="#about" class="cta-btn secondary-cta">Learn More</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Trust Factors Section -->
+    <section class="trust-section">
+        <div class="container trust-grid">
+            <div class="trust-item">
+                <i class="fas fa-fighter-jet"></i>
+                <h3>Instant Delivery</h3>
+                <p>Credentials delivered to your email instantly.</p>
+            </div>
+            <div class="trust-item">
+                <i class="fas fa-lock"></i>
+                <h3>Secure Payments</h3>
+                <p>100% secure processing. US Cards, PayPal & Venmo.</p>
+            </div>
+            <div class="trust-item">
+                <i class="fas fa-headset"></i>
+                <h3>24/7 Support</h3>
+                <p>Always online to help you with your services.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-container">
+            <div class="footer-col brand-col">
+                <h3>Sub<span class="highlight">Hub</span></h3>
+                <p>Next-generation digital access. Get what you need, instantly.</p>
+            </div>
+            <div class="footer-col">
+                <h4>Ecosystem</h4>
+                <ul>
+                    <li><a href="about.html">About Us</a></li>
+                    <li><a href="help.html">Help Center</a></li>
+                    <li><a href="enterprise.html">Enterprise Solutions</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>Legal</h4>
+                <ul>
+                    <li><a href="privacy.html">Privacy Policy</a></li>
+                    <li><a href="terms.html">Terms of Service</a></li>
+                    <li><a href="refund.html">Refund Policy</a></li>
+                </ul>
+            </div>
+            <div class="footer-col payment-col">
+                <h4>Accepted Here</h4>
+                <div class="payment-icons">
+                    <i class="fab fa-cc-visa" title="Visa"></i>
+                    <i class="fab fa-cc-mastercard" title="Mastercard"></i>
+                    <i class="fab fa-cc-paypal" title="PayPal"></i>
+                    <i class="fab fa-cc-amex" title="Amex"></i>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 SubHub Inc. Built for excellence.</p>
+        </div>
+    </footer>
+
+    <!-- Firebase -->
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
+    <script src="js/firebase-config.js"></script>
+    <script src="js/db.js"></script>
+    <script src="js/script.js"></script>
+
+    <!--Start of Tawk.to Script-->
+    <script type="text/javascript">
+        var Tawk_API = Tawk_API || {}, Tawk_LoadStart = new Date();
+        (function () {
+            var s1 = document.createElement("script"), s0 = document.getElementsByTagName("script")[0];
+            s1.async = true;
+            s1.src = 'https://embed.tawk.to/69ec4a4347a5081c30649d8d/1jn1g466m';
+            s1.charset = 'UTF-8';
+            s1.setAttribute('crossorigin', '*');
+            s0.parentNode.insertBefore(s1, s0);
+        })();
+    </script>
+    <!--End of Tawk.to Script-->
+</body>
+
+</html>

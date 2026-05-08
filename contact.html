@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SubHub - Contact Us</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="dark-theme">
+    <!-- Animated Blobs -->
+    <div class="blob blob-1"></div>
+    <div class="blob blob-2" style="top: 30%;"></div>
+
+    <!-- Sidebar Menu (Injected by JS) -->
+    <div class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <h2>Sub<span class="highlight">Hub</span></h2>
+            <button id="closeSidebar" class="icon-btn"><i class="fas fa-times"></i></button>
+        </div>
+        <ul class="sidebar-nav"></ul>
+        <div class="sidebar-footer">
+            <p>&copy; 2026 SubHub Ecosystem</p>
+        </div>
+    </div>
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="navbar-left">
+            <button id="openSidebar" class="icon-btn"><i class="fas fa-bars"></i></button>
+            <a href="index.html" class="logo">Sub<span class="highlight">Hub</span></a>
+        </div>
+        <div class="navbar-center" style="display: flex; gap: 20px; align-items: center; margin: 0 auto; display: none;">
+            <a href="index.html" style="color: var(--text-main); font-weight: 500;"><i class="fas fa-home"></i> Home</a>
+            <a href="store.html" style="color: var(--text-main); font-weight: 500;"><i class="fas fa-store"></i> Store</a>
+        </div>
+        <div class="navbar-right" style="display: flex; align-items: center; gap: 20px;">
+            <div style="display: flex; gap: 20px; align-items: center;" class="desktop-nav-links">
+                <a href="index.html" class="nav-link"><i class="fas fa-home"></i> Home</a>
+                <a href="store.html" class="nav-link"><i class="fas fa-store"></i> Store</a>
+            </div>
+            <a href="login.html" class="login-btn"><i class="fas fa-user-circle"></i> Login</a>
+        </div>
+    </nav>
+
+    <main class="container" style="padding-top: 80px; min-height: 70vh; display: flex; flex-direction: column; align-items: center;">
+        <div class="section-header" style="margin-top: 20px;">
+            <h2 class="section-title">Contact Us</h2>
+            <p class="section-desc">Have questions? We are here to help you 24/7.</p>
+        </div>
+
+        <div class="auth-card" style="max-width: 600px; margin-bottom: 50px;">
+            <form id="contactForm" onsubmit="alert('Message sent successfully! We will get back to you shortly.'); event.preventDefault();">
+                <div class="form-group" style="text-align: left;">
+                    <label>Full Name</label>
+                    <input type="text" class="form-input" placeholder="Your name" required>
+                </div>
+                <div class="form-group" style="text-align: left;">
+                    <label>Email Address</label>
+                    <input type="email" class="form-input" placeholder="Your email" required>
+                </div>
+                <div class="form-group" style="text-align: left;">
+                    <label>Message</label>
+                    <textarea class="form-input" rows="5" placeholder="How can we help?" required></textarea>
+                </div>
+                <button type="submit" class="pay-btn" style="width: 100%; margin-top: 15px;">Send Message</button>
+            </form>
+        </div>
+    </main>
+
+    <script src="js/script.js?v=4"></script>
+</body>
+</html>

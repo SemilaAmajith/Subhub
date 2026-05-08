@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SubHub - My Account</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="dark-theme">
+    <div class="blob blob-1"></div>
+    <div class="blob blob-2" style="top: auto; bottom: -100px;"></div>
+
+    <div class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <h2>Sub<span class="highlight">Hub</span></h2>
+            <button id="closeSidebar" class="icon-btn"><i class="fas fa-times"></i></button>
+        </div>
+        <ul class="sidebar-nav"></ul>
+        <div class="sidebar-footer">
+            <p>&copy; 2026 SubHub Ecosystem</p>
+        </div>
+    </div>
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+    <nav class="navbar">
+        <div class="navbar-left">
+            <button id="openSidebar" class="icon-btn"><i class="fas fa-bars"></i></button>
+            <a href="index.html" class="logo">Sub<span class="highlight">Hub</span></a>
+        </div>
+        <div class="navbar-center" style="display: flex; gap: 20px; align-items: center; margin: 0 auto; display: none;">
+            <a href="index.html" style="color: var(--text-main); font-weight: 500;"><i class="fas fa-home"></i> Home</a>
+            <a href="store.html" style="color: var(--text-main); font-weight: 500;"><i class="fas fa-store"></i> Store</a>
+        </div>
+        <div class="navbar-right" style="display: flex; align-items: center; gap: 20px;">
+            <div style="display: flex; gap: 20px; align-items: center;" class="desktop-nav-links">
+                <a href="index.html" class="nav-link"><i class="fas fa-home"></i> Home</a>
+                <a href="store.html" class="nav-link"><i class="fas fa-store"></i> Store</a>
+            </div>
+            <a href="login.html" class="login-btn"><i class="fas fa-user-circle"></i> Login</a>
+        </div>
+    </nav>
+
+    <main class="container" style="padding-top: 60px; min-height: 80vh;">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 40px; flex-wrap: wrap; gap: 20px;">
+            <div style="display: flex; align-items: center; gap: 20px;">
+                <div style="width: 80px; height: 80px; border-radius: 50%; background: var(--glass-bg); border: 2px solid var(--accent-secondary); display: flex; align-items: center; justify-content: center; font-size: 2.5rem; color: var(--accent-secondary);">
+                    <i class="fas fa-user"></i>
+                </div>
+                <div>
+                    <h2 style="font-family: 'Space Grotesk', sans-serif; font-size: 2rem;">My Profile</h2>
+                    <p id="accountEmailDisplay" style="color: var(--text-muted);">Loading...</p>
+                </div>
+            </div>
+            <button class="secondary-cta" onclick="logout()" style="color: var(--danger); border-color: rgba(255,71,87,0.3);">
+                <i class="fas fa-sign-out-alt"></i> Logout
+            </button>
+        </div>
+
+        <h3 style="font-size: 1.5rem; margin-bottom: 20px; border-bottom: 1px solid var(--border-color); padding-bottom: 15px;">Order History</h3>
+        
+        <div class="data-table-wrapper">
+            <table class="data-table" id="accountOrdersTable">
+                <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>Order ID</th>
+                        <th>Service</th>
+                        <th>Plan</th>
+                        <th>Price</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Dynamically Loaded -->
+                </tbody>
+            </table>
+        </div>
+    </main>
+
+    <!-- Firebase -->
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
+    <script src="js/firebase-config.js"></script>
+    <script src="js/db.js"></script>
+    
+    <script src="js/script.js?v=4"></script>
+    <script>
+        function logout() {
+            localStorage.removeItem('subhub_user');
+            window.location.href = 'index.html';
+        }
+
+        document.addEventListener('DOMContentLoaded', async () => {
+            const userEmail = localStorage.getItem('subhub_user');
+            
+            if (!userEmail) {
+                // Not signed in
+                window.location.href = 'login.html';
+                return;
+            }
+            
+            document.getElementById('accountEmailDisplay').innerText = userEmail;
+                
+                let orders = [];
+                try {
+                    orders = await SubHubDB.getOrders();
+                } catch(e) {
+                    console.error(e);
+                }
+                
+                // Match order user accounts
+                const myOrders = orders.filter(o => o.userAccount.toLowerCase() === userEmail.toLowerCase());
+            
+            const tbody = document.querySelector('#accountOrdersTable tbody');
+            if(myOrders.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="6" style="text-align: center; padding: 40px; color: var(--text-muted);">No orders found. Explore our services to get started!</td></tr>';
+            } else {
+                myOrders.reverse().forEach(o => {
+                    const tr = document.createElement('tr');
+                    const d = new Date(o.date);
+                    const isPending = o.status === 'Pending';
+                    const statusColor = isPending ? '#ffab00' : 'var(--success)';
+                    const statusBg = isPending ? 'rgba(255, 171, 0, 0.2)' : 'rgba(16, 185, 129, 0.2)';
+                    
+                    tr.innerHTML = `
+                        <td>${d.toLocaleDateString()}</td>
+                        <td style="font-family: monospace; color: var(--accent-secondary);">${o.id}</td>
+                        <td style="font-weight: bold;">${o.service}</td>
+                        <td>${o.plan}</td>
+                        <td>$${parseFloat(o.price).toFixed(2)}</td>
+                        <td><span style="background: ${statusBg}; color: ${statusColor}; padding: 4px 10px; border-radius: 12px; font-size: 0.8rem; font-weight: bold;">${o.status || 'Active'}</span></td>
+                    `;
+                    tbody.appendChild(tr);
+                });
+            }
+        });
+    </script>
+</body>
+</html>

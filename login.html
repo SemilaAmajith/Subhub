@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SubHub - Authentication</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- EmailJS SDK -->
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+    <script type="text/javascript">
+        (function() {
+            emailjs.init({
+              publicKey: "dZwzK6URCLMZlTROJ",
+            });
+        })();
+    </script>
+    
+    <style>
+        .auth-tabs { display: flex; margin-bottom: 20px; border-bottom: 1px solid var(--border-color); }
+        .auth-tab { flex: 1; padding: 10px; text-align: center; cursor: pointer; color: var(--text-muted); border-bottom: 2px solid transparent; transition: 0.3s; }
+        .auth-tab.active { color: var(--accent-secondary); border-bottom-color: var(--accent-secondary); font-weight: 500; }
+        .form-section { display: none; }
+        .form-section.active { display: block; animation: fadeIn 0.3s ease; }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(5px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .strength-bar { height: 5px; background: rgba(255,255,255,0.1); border-radius: 3px; margin-top: 8px; overflow: hidden; display: flex; gap: 2px; }
+        .strength-segment { height: 100%; flex: 1; transition: 0.3s; background: rgba(255,255,255,0.1); }
+        .strength-text { font-size: 0.8rem; margin-top: 5px; display: block; text-align: right; }
+        
+        .input-error { border: 1px solid #ff3366 !important; }
+        .input-error:focus { box-shadow: 0 0 0 3px rgba(255, 51, 102, 0.2) !important; }
+        .input-success { border: 1px solid #2ed573 !important; }
+        .input-success:focus { box-shadow: 0 0 0 3px rgba(46, 213, 115, 0.2) !important; }
+        .error-text { color: #ff3366; font-size: 0.8rem; margin-top: 5px; display: none; }
+        
+        /* Popup Styles */
+        .success-popup { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); display: flex; align-items: center; justify-content: center; z-index: 1000; opacity: 0; pointer-events: none; transition: 0.3s; backdrop-filter: blur(5px); }
+        .success-popup.show { opacity: 1; pointer-events: all; }
+        .popup-content { background: var(--bg-secondary); padding: 40px; border-radius: 20px; text-align: center; max-width: 400px; width: 90%; border: 1px solid rgba(0, 229, 255, 0.3); box-shadow: 0 10px 40px rgba(0, 229, 255, 0.1); transform: scale(0.9); transition: 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+        .success-popup.show .popup-content { transform: scale(1); }
+    </style>
+</head>
+<body class="dark-theme">
+
+    <div class="auth-container" style="padding: 40px 20px;">
+        <div class="auth-card" style="max-width: 450px; width: 100%;">
+            <h2 style="margin-bottom: 20px;"><a href="index.html" class="logo">Sub<span class="highlight">Hub</span></a></h2>
+            
+            <div class="auth-tabs">
+                <div class="auth-tab active" onclick="switchAuthTab('login')">Sign In</div>
+                <div class="auth-tab" onclick="switchAuthTab('register')">Create Account</div>
+            </div>
+            
+            <!-- Login Form -->
+            <div id="loginSection" class="form-section active">
+                <p style="color: var(--text-muted); margin-bottom: 25px;">Welcome back! Please login to your account.</p>
+                <form id="loginForm" onsubmit="handleLogin(event)">
+                    <div class="form-group" style="text-align: left;">
+                        <label>Email Address</label>
+                        <input type="email" class="form-input" id="loginEmail" placeholder="Enter your email" required>
+                    </div>
+                    <div class="form-group" style="text-align: left;">
+                        <label>Password</label>
+                        <div class="pwd-wrapper">
+                            <input type="password" class="form-input" id="loginPassword" placeholder="Enter password" required>
+                            <i class="fas fa-eye pwd-toggle-icon" onclick="togglePassword(this, 'loginPassword')"></i>
+                        </div>
+                        <div style="text-align: right; margin-top: 8px;">
+                            <a href="#" class="highlight" style="font-size: 0.8rem;" onclick="switchAuthTab('forgot')">Forgot Password?</a>
+                        </div>
+                    </div>
+                    <button type="submit" class="pay-btn" style="width: 100%;" id="loginBtn">Sign In</button>
+                </form>
+            </div>
+            
+            <!-- Register Form -->
+            <div id="registerSection" class="form-section">
+                <p style="color: var(--text-muted); margin-bottom: 25px;">Create a new account to get started.</p>
+                <form id="registerForm" onsubmit="handleRegister(event)">
+                    <div class="form-group" style="text-align: left;">
+                        <label>Full Name</label>
+                        <input type="text" class="form-input" id="regName" placeholder="Enter your full name" required>
+                    </div>
+                    <div class="form-group" style="text-align: left;">
+                        <label>Phone Number</label>
+                        <input type="tel" class="form-input" id="regPhone" placeholder="Enter your phone number" required>
+                    </div>
+                    <div class="form-group" style="text-align: left;">
+                        <label>Email Address</label>
+                        <input type="email" class="form-input" id="regEmail" placeholder="Enter your email" required>
+                    </div>
+                    <div class="form-group" style="text-align: left;">
+                        <label>Password</label>
+                        <div class="pwd-wrapper">
+                            <input type="password" class="form-input" id="regPassword" placeholder="Create a strong password" required oninput="checkPasswordStrength()">
+                            <i class="fas fa-eye pwd-toggle-icon" onclick="togglePassword(this, 'regPassword')"></i>
+                        </div>
+                        <div class="strength-bar" id="strengthBar">
+                            <div class="strength-segment" id="seg1"></div>
+                            <div class="strength-segment" id="seg2"></div>
+                            <div class="strength-segment" id="seg3"></div>
+                            <div class="strength-segment" id="seg4"></div>
+                        </div>
+                        <span class="strength-text" id="strengthText">Waiting for input...</span>
+                    </div>
+                    <div class="form-group" style="text-align: left; margin-bottom: 25px;">
+                        <label>Confirm Password</label>
+                        <div class="pwd-wrapper">
+                            <input type="password" class="form-input" id="regConfirmPassword" placeholder="Re-enter password" required oninput="checkPasswordMatch()">
+                            <i class="fas fa-eye pwd-toggle-icon" onclick="togglePassword(this, 'regConfirmPassword')"></i>
+                        </div>
+                        <div class="error-text" id="matchError"><i class="fas fa-exclamation-circle"></i> Passwords do not match.</div>
+                    </div>
+                    <button type="submit" class="pay-btn" style="width: 100%; opacity: 0.5; cursor: not-allowed;" id="registerBtn" disabled>Create Account</button>
+                </form>
+            </div>
+            
+            <!-- Forgot Password Form -->
+            <div id="forgotSection" class="form-section">
+                <div id="forgotStep1">
+                    <p style="color: var(--text-muted); margin-bottom: 25px;">Enter your email address to receive a 4-digit verification code.</p>
+                    <form id="forgotForm1" onsubmit="handleForgotStep1(event)">
+                        <div class="form-group" style="text-align: left;">
+                            <label>Email Address</label>
+                            <input type="email" class="form-input" id="forgotEmail" placeholder="Enter your email" required>
+                        </div>
+                        <button type="submit" class="pay-btn" style="width: 100%;" id="forgotBtn1">Send Code</button>
+                        <p style="text-align: center; margin-top: 20px;"><a href="#" class="highlight" style="font-size: 0.9rem;" onclick="switchAuthTab('login')"><i class="fas fa-arrow-left"></i> Back to Login</a></p>
+                    </form>
+                </div>
+                
+                <div id="forgotStep2" style="display: none;">
+                    <p style="color: var(--text-muted); margin-bottom: 25px;">We've sent a code to your email. Please enter it below.</p>
+                    <form id="forgotForm2" onsubmit="handleForgotStep2(event)">
+                        <div class="form-group" style="text-align: left;">
+                            <label>Verification Code</label>
+                            <input type="text" class="form-input" id="forgotCode" placeholder="e.g. 2154" maxlength="4" required style="text-align: center; font-size: 1.8rem; letter-spacing: 15px; font-weight: 600;">
+                        </div>
+                        <button type="submit" class="pay-btn" style="width: 100%;" id="forgotBtn2">Verify Code</button>
+                        <p style="text-align: center; margin-top: 20px;"><a href="#" class="highlight" style="font-size: 0.9rem;" onclick="switchAuthTab('forgot')">Cancel</a></p>
+                    </form>
+                </div>
+
+                <div id="forgotStep3" style="display: none;">
+                    <p style="color: var(--text-muted); margin-bottom: 25px;">Create a new password for your account.</p>
+                    <form id="forgotForm3" onsubmit="handleForgotStep3(event)">
+                        <div class="form-group" style="text-align: left;">
+                            <label>New Password</label>
+                            <div class="pwd-wrapper">
+                                <input type="password" class="form-input" id="resetPassword" placeholder="Create a new strong password" required oninput="checkResetPasswordMatch()">
+                                <i class="fas fa-eye pwd-toggle-icon" onclick="togglePassword(this, 'resetPassword')"></i>
+                            </div>
+                        </div>
+                        <div class="form-group" style="text-align: left; margin-bottom: 25px;">
+                            <label>Confirm New Password</label>
+                            <div class="pwd-wrapper">
+                                <input type="password" class="form-input" id="resetConfirmPassword" placeholder="Re-enter new password" required oninput="checkResetPasswordMatch()">
+                                <i class="fas fa-eye pwd-toggle-icon" onclick="togglePassword(this, 'resetConfirmPassword')"></i>
+                            </div>
+                            <div class="error-text" id="resetMatchError"><i class="fas fa-exclamation-circle"></i> Passwords do not match.</div>
+                        </div>
+                        <button type="submit" class="pay-btn" style="width: 100%; opacity: 0.5; cursor: not-allowed;" id="forgotBtn3" disabled>Reset Password</button>
+                    </form>
+                </div>
+            </div>
+            
+        </div>
+    </div>
+
+    <!-- Success Popup -->
+    <div class="success-popup" id="successPopup">
+        <div class="popup-content">
+            <i class="fas fa-envelope-open-text" style="font-size: 3.5rem; color: var(--accent-secondary); margin-bottom: 20px; display: block;"></i>
+            <h3 style="margin-bottom: 10px; font-size: 1.5rem;">Account Created!</h3>
+            <p style="color: var(--text-muted); margin-bottom: 25px; line-height: 1.6;" id="popupMessage">Registration successful.</p>
+            <button class="pay-btn" style="width: 100%;" onclick="goToLogin()">Continue to Login</button>
+        </div>
+    </div>
+
+    <!-- Firebase -->
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
+    <script src="js/firebase-config.js"></script>
+    <script src="js/db.js"></script>
+
+    <script src="js/login.js"></script>
+
+    <!--Start of Tawk.to Script-->
+    <script type="text/javascript">
+    var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
+    (function(){
+    var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
+    s1.async=true;
+    s1.src='https://embed.tawk.to/69ec4506ce5b461c2f95e35e/1jn1er97f';
+    s1.charset='UTF-8';
+    s1.setAttribute('crossorigin','*');
+    s0.parentNode.insertBefore(s1,s0);
+    })();
+    </script>
+    <!--End of Tawk.to Script-->
+</body>
+</html>
