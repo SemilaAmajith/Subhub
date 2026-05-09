@@ -16,12 +16,16 @@ app.use(express.json({ limit: '10mb' })); // For crypto screenshot base64
 app.use(express.urlencoded({ extended: true }));
 
 // Database Connection
-mongoose.connect(process.env.MONGO_URI, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-})
-.then(() => console.log('MongoDB connected successfully'))
-.catch(err => console.error('MongoDB connection error:', err));
+if (process.env.MONGO_URI) {
+    mongoose.connect(process.env.MONGO_URI, {
+        useNewUrlParser: true,
+        useUnifiedTopology: true,
+    })
+    .then(() => console.log('MongoDB connected successfully'))
+    .catch(err => console.error('MongoDB connection error:', err));
+} else {
+    console.error('CRITICAL ERROR: MONGO_URI is missing from environment variables!');
+}
 
 // Routes
 app.use('/api/orders', orderRoutes);
