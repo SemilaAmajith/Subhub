@@ -1,13 +1,12 @@
 // js/db.js - Unified Database Operations for MongoDB Backend
 
-// Core DB wrapper for API calls
-
+const API_BASE = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1' ? 'http://localhost:5000/api' : '/api';
 
 window.SubHubDB = {
     // --- USERS (Moved to MongoDB Backend) ---
     async getUsers() {
         try {
-            const response = await fetch('http://localhost:5000/api/users');
+            const response = await fetch(`${API_BASE}/users`);
             const data = await response.json();
             return data.success ? data.users : [];
         } catch (error) {
@@ -17,7 +16,7 @@ window.SubHubDB = {
     },
     async saveUser(user) {
         try {
-            await fetch('http://localhost:5000/api/users', {
+            await fetch(`${API_BASE}/users`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(user)
@@ -30,7 +29,7 @@ window.SubHubDB = {
     // --- PRODUCTS (Moved to MongoDB Backend) ---
     async getProducts() {
         try {
-            const response = await fetch('http://localhost:5000/api/products');
+            const response = await fetch(`${API_BASE}/products`);
             const data = await response.json();
             return data.success ? data.products : [];
         } catch (error) {
@@ -40,7 +39,7 @@ window.SubHubDB = {
     },
     async saveProduct(product) {
         try {
-            await fetch('http://localhost:5000/api/products', {
+            await fetch(`${API_BASE}/products`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(product)
@@ -51,7 +50,7 @@ window.SubHubDB = {
     },
     async deleteProduct(productId) {
         try {
-            await fetch(`http://localhost:5000/api/products/${productId}`, {
+            await fetch(`${API_BASE}/products/${productId}`, {
                 method: 'DELETE'
             });
         } catch (error) {
@@ -62,7 +61,7 @@ window.SubHubDB = {
     // --- ORDERS (Moved to MongoDB Backend) ---
     async getOrders() {
         try {
-            const response = await fetch('http://localhost:5000/api/orders');
+            const response = await fetch(`${API_BASE}/orders`);
             const data = await response.json();
             if (data.success) {
                 // MongoDB orders
@@ -99,7 +98,7 @@ window.SubHubDB = {
                 proofImage: order.proofImage || order.proof
             };
 
-            await fetch('http://localhost:5000/api/orders', {
+            await fetch(`${API_BASE}/orders`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(mongoOrder)
@@ -110,7 +109,7 @@ window.SubHubDB = {
     },
     async updateOrderStatus(orderId, status) {
         try {
-            await fetch(`http://localhost:5000/api/orders/${orderId}`, {
+            await fetch(`${API_BASE}/orders/${orderId}`, {
                 method: 'PUT',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ status })
