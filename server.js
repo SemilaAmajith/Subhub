@@ -16,8 +16,7 @@ app.use(cors());
 app.use(express.json({ limit: '10mb' })); // For crypto screenshot base64
 app.use(express.urlencoded({ extended: true }));
 
-// Serve static frontend files
-app.use(express.static(path.join(__dirname, '../')));
+
 
 // Database Connection
 if (process.env.MONGO_URI) {
