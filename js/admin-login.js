@@ -1,3 +1,5 @@
+const API_BASE = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1' ? 'http://localhost:5000/api' : '/api';
+
 document.addEventListener('DOMContentLoaded', () => {
     const adminLoginForm = document.getElementById('adminLoginForm');
 
@@ -13,7 +15,7 @@ document.addEventListener('DOMContentLoaded', () => {
             btn.disabled = true;
 
             // Use custom Node.js Auth API
-            fetch('http://localhost:5000/api/auth/login', {
+            fetch(`${API_BASE}/auth/login`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ email, password })
