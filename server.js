@@ -2,6 +2,7 @@ require('dotenv').config();
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
+const path = require('path');
 const orderRoutes = require('./routes/orderRoutes');
 const productRoutes = require('./routes/productRoutes');
 const userRoutes = require('./routes/userRoutes');
@@ -15,6 +16,9 @@ app.use(cors());
 app.use(express.json({ limit: '10mb' })); // For crypto screenshot base64
 app.use(express.urlencoded({ extended: true }));
 
+// Serve static frontend files
+app.use(express.static(path.join(__dirname, '../')));
+
 // Database Connection
 if (process.env.MONGO_URI) {
     mongoose.connect(process.env.MONGO_URI, {
@@ -27,11 +31,11 @@ if (process.env.MONGO_URI) {
     console.error('CRITICAL ERROR: MONGO_URI is missing from environment variables!');
 }
 
-// Routes
-app.use('/api/orders', orderRoutes);
-app.use('/api/products', productRoutes);
-app.use('/api/users', userRoutes);
-app.use('/api/auth', authRoutes);
+// Routes (Support both local /api and Vercel stripped paths)
+app.use(['/api/orders', '/orders'], orderRoutes);
+app.use(['/api/products', '/products'], productRoutes);
+app.use(['/api/users', '/users'], userRoutes);
+app.use(['/api/auth', '/auth'], authRoutes);
 
 // Basic Route for testing
 app.get('/', (req, res) => {
