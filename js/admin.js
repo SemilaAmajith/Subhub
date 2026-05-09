@@ -1,24 +1,7 @@
-// Admin Authentication Check via LocalStorage
-const isAdminLoggedIn = localStorage.getItem('subhub_admin_logged_in');
-if (isAdminLoggedIn === 'true') {
-    // User is signed in, show the dashboard
-    document.body.style.display = 'block';
-} else {
-    // No user is signed in, redirect to login
-    window.location.href = 'admin-login.html';
-}
+// Admin Authentication Check Removed - Direct Access Granted
+document.body.style.display = 'block';
 
-document.addEventListener('DOMContentLoaded', () => {
-    // Handle logout
-    const logoutBtn = document.getElementById('adminLogoutBtn');
-    if (logoutBtn) {
-        logoutBtn.addEventListener('click', (e) => {
-            e.preventDefault();
-            localStorage.removeItem('subhub_admin_logged_in');
-            window.location.href = 'admin-login.html';
-        });
-    }
-});
+
 
 // Admin Layout logic
 function switchTab(tabId) {
