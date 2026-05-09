@@ -1,12 +1,7 @@
 {
-  "name": "subhub-backend",
+  "name": "subhub",
   "version": "1.0.0",
-  "description": "Backend for SubHub",
-  "main": "server.js",
-  "scripts": {
-    "start": "node server.js",
-    "dev": "nodemon server.js"
-  },
+  "description": "SubHub Platform",
   "dependencies": {
     "cors": "^2.8.5",
     "dotenv": "^16.4.5",
