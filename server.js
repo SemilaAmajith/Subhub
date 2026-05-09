@@ -27,11 +27,11 @@ if (process.env.MONGO_URI) {
     console.error('CRITICAL ERROR: MONGO_URI is missing from environment variables!');
 }
 
-// Routes
-app.use('/api/orders', orderRoutes);
-app.use('/api/products', productRoutes);
-app.use('/api/users', userRoutes);
-app.use('/api/auth', authRoutes);
+// Routes (Support both local /api and Vercel stripped paths)
+app.use(['/api/orders', '/orders'], orderRoutes);
+app.use(['/api/products', '/products'], productRoutes);
+app.use(['/api/users', '/users'], userRoutes);
+app.use(['/api/auth', '/auth'], authRoutes);
 
 // Basic Route for testing
 app.get('/', (req, res) => {
