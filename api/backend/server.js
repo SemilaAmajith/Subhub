@@ -18,17 +18,35 @@ app.use(express.urlencoded({ extended: true }));
 
 
 
-// Database Connection
-if (process.env.MONGO_URI) {
-    mongoose.connect(process.env.MONGO_URI, {
+// Robust Serverless Database Connection Logic
+let isConnected = false;
+const connectDB = async () => {
+    if (isConnected) return;
+    if (mongoose.connection.readyState >= 1) {
+        isConnected = true;
+        return;
+    }
+    if (!process.env.MONGO_URI) {
+        throw new Error('CRITICAL ERROR: MONGO_URI is missing from environment variables!');
+    }
+    await mongoose.connect(process.env.MONGO_URI, {
         useNewUrlParser: true,
         useUnifiedTopology: true,
-    })
-    .then(() => console.log('MongoDB connected successfully'))
-    .catch(err => console.error('MongoDB connection error:', err));
-} else {
-    console.error('CRITICAL ERROR: MONGO_URI is missing from environment variables!');
-}
+    });
+    isConnected = true;
+    console.log('MongoDB connected successfully');
+};
+
+// Middleware to ensure DB is connected before handling any route
+app.use(async (req, res, next) => {
+    try {
+        await connectDB();
+        next();
+    } catch (error) {
+        console.error('MongoDB Connection Error:', error);
+        res.status(500).json({ success: false, message: 'Database connection failed. Please check Vercel logs and MONGO_URI.' });
+    }
+});
 
 // Routes (Support both local /api and Vercel stripped paths)
 app.use(['/api/orders', '/orders'], orderRoutes);
