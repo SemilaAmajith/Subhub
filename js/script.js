@@ -289,8 +289,8 @@ async function openCheckout(productId) {
                 <div id="paymentDetailsArea" style="margin-bottom: 20px;">
                     <div style="background: rgba(255,255,255,0.05); padding: 15px; border-radius: 10px; margin-bottom: 15px; border: 1px solid var(--border-color);">
                         <p style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 10px;">Send the exact amount to one of the wallets below and upload the Proof Screenshot.</p>
-                        <p style="font-size: 0.85rem; margin-bottom: 8px;"><strong>BTC:</strong> <span style="color:var(--accent-secondary); font-family:monospace; user-select:all;">bc1qxy2kgdygjrsqtzq2n0yrf2493p83kkfjhx0wlh</span></p>
-                        <p style="font-size: 0.85rem;"><strong>ETH:</strong> <span style="color:var(--accent-secondary); font-family:monospace; user-select:all;">0x71C7656EC7ab88b098defB751B7401B5f6d8976F</span></p>
+                        <p style="font-size: 0.85rem; margin-bottom: 8px;"><strong>BTC:</strong> <span style="color:var(--accent-secondary); font-family:monospace; user-select:all;">1Di9qtUkzUSi1Jpqrf8km7L1gMYZNohsns</span></p>
+                        <p style="font-size: 0.85rem;"><strong>USDT (TRC20):</strong> <span style="color:var(--accent-secondary); font-family:monospace; user-select:all;">TCT1xLuxLcDjFkD8YPHsLvDMMWoJwWY6hf</span></p>
                     </div>
                     <div class="form-group">
                         <label>Upload Payment Proof Screenshot</label>
